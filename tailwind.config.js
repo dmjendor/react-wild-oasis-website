@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      dropShadow: {
+        "3xl": "0 35px 35px rgba(0, 0, 0, 0.5)", // Increased opacity for a darker, more pronounced look
+        intense: ["0 5px 5px rgba(0, 0, 0, 0.8)"],
+      },
       colors: {
         primary: {
           50: "#E1E8EF",
