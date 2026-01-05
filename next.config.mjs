@@ -10,6 +10,7 @@ const nextConfig = {
       },
     ],
   },
+  // output: "export" used for static site generation
 };
 
 export default nextConfig;

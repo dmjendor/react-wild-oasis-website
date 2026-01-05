@@ -1,10 +1,20 @@
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { getCabin } from "../../_lib/data-service";
+import { getCabin, getCabins } from "../../_lib/data-service";
 
 export async function generateMetadata({ params }) {
   const { name } = await getCabin(params.cabinId);
   return { title: `Cabin ${name}` };
+}
+
+export async function generateStaticParams() {
+  const cabins = await getCabins();
+  // cabinId is the name of the key since that is the name of the dynamic folder
+  const ids = cabins.map((cabin) => ({
+    cabinId: `${cabin.id}`,
+  }));
+  console.log(ids);
+  return ids;
 }
 
 export default async function Page({ params }) {
@@ -37,8 +47,7 @@ export default async function Page({ params }) {
             <li className="flex gap-3 items-center">
               <UsersIcon className="h-5 w-5 text-primary-600" />
               <span className="text-lg">
-                {/* For up to <span className="font-bold">{maxCapacity}</span>{" "} */}
-                For up to <span className="font-bold">{capacity.max}</span>{" "}
+                For up to <span className="font-bold">{maxCapacity}</span>{" "}
                 guests
               </span>
             </li>
