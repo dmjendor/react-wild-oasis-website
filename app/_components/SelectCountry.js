@@ -1,12 +1,19 @@
-import { getCountries } from '@/app/_lib/data-service';
+import { getCountries } from "@/app/_lib/data-service";
 
 // Let's imagine your colleague already built this component 😃
 
 async function SelectCountry({ defaultCountry, name, id, className }) {
   const countries = await getCountries();
   const flag =
-    countries.find((country) => country.name === defaultCountry)?.flag ?? '';
+    countries.find((country) => country.name === defaultCountry)?.flag ?? "";
 
+  const priorityNames = ["United States of America", "Canada"];
+  const priorityCountries = priorityNames
+    .map((name) => countries.find((country) => country.name === name))
+    .filter(Boolean);
+  const remainingCountries = countries.filter(
+    (country) => !priorityNames.includes(country.name)
+  );
   return (
     <select
       name={name}
@@ -15,9 +22,21 @@ async function SelectCountry({ defaultCountry, name, id, className }) {
       defaultValue={`${defaultCountry}%${flag}`}
       className={className}
     >
-      <option value=''>Select country...</option>
-      {countries.map((c) => (
-        <option key={c.name} value={`${c.name}%${c.flag}`}>
+      <option value="">Select country...</option>
+      {priorityCountries.map((c) => (
+        <option
+          key={c.name}
+          value={`${c.name}%${c.flag}`}
+        >
+          {c.name}
+        </option>
+      ))}
+      {priorityCountries.length > 0 && <option disabled>──────────</option>}
+      {remainingCountries.map((c) => (
+        <option
+          key={c.name}
+          value={`${c.name}%${c.flag}`}
+        >
           {c.name}
         </option>
       ))}
