@@ -58,10 +58,8 @@ export async function getGuest(email) {
     .select("*")
     .eq("email", email)
     .single();
-
   if (error) {
     console.error(error);
-    notFound();
   }
   // No error here! We handle the possibility of no guest in the sign in callback
   return data;

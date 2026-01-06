@@ -1,10 +1,12 @@
 import Image from "next/image";
 import about1 from "@/public/about-1.jpg";
 import about2 from "@/public/about-2.jpg";
-import { getCabins } from "../_lib/data-service";
+import { getCabins } from "@/app/_lib/data-service";
+import Link from "next/link";
 
 export default async function Page() {
-  const { cabins } = await getCabins();
+  const cabins = await getCabins();
+  console.log(cabins);
   return (
     <div className="grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center">
       <div className="col-span-3">
@@ -21,7 +23,7 @@ export default async function Page() {
             and enjoying simple pleasures with family.
           </p>
           <p>
-            Our {cabins.length} luxury cabins provide a cozy base, but the real
+            Our {cabins?.length} luxury cabins provide a cozy base, but the real
             freedom and peace you&apos;ll find in the surrounding mountains.
             Wander through lush forests, breathe in the fresh air, and watch the
             stars twinkle above from the warmth of a campfire or your hot tub.
@@ -36,21 +38,21 @@ export default async function Page() {
 
       <div className="col-span-2 relative">
         <Image
-          fill
           src={about1}
+          className="flex-1 border-r border-primary-800 object-cover"
           alt="Family sitting around a fire pit in front of cabin"
         />
       </div>
 
-      <div className="col-span-2 relative">
+      <div className="col-start-1 col-span-2 row-start-2 h-80 relative overflow-hidden">
         <Image
           src={about2}
-          fill
+          className="w-full h-full border-r border-primary-800 object-cover"
           alt="Family that manages The Wild Oasis"
         />
       </div>
 
-      <div className="col-span-3">
+      <div className="col-start-3 col-span-3 row-start-2">
         <h1 className="text-4xl mb-10 text-accent-400 font-medium">
           Managed by our family since 1962
         </h1>
@@ -72,12 +74,12 @@ export default async function Page() {
           </p>
 
           <div>
-            <a
+            <Link
               href="/cabins"
               className="inline-block mt-4 bg-accent-500 px-8 py-5 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all"
             >
               Explore our luxury cabins
-            </a>
+            </Link>
           </div>
         </div>
       </div>
